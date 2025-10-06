@@ -19,14 +19,17 @@
     group = "root";
   };
 
-  # uBridge ohne Passwort-Abfrage für User "philip"
+  # uBridge ohne Passwort-Abfrage für User
   security.sudo.extraRules = [{
-    users = [ "philip" ];
+    users = [ "user" ];
     commands = [{
       command = "${pkgs.ubridge}/bin/ubridge";
       options = [ "NOPASSWD" ];
     }];
   }];
+
+  # User zur libvirtd und docker Gruppe hinzufügen
+  users.users.user.extraGroups = [ "libvirtd" "docker" ];
 
   environment.systemPackages = with pkgs; [
     # Virt-Manager & QEMU/KVM Tools

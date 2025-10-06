@@ -15,5 +15,11 @@
   };
 
   # SSH
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+    };
+  };
 }

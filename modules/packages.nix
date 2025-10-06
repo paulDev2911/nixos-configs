@@ -31,5 +31,9 @@
 
     # Security
     osquery
+
+    # vms
+    virt-manager
+
   ];
 }

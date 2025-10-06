@@ -12,6 +12,7 @@
     ./modules/services.nix        # System services (SSH, audio, printing)
     ./modules/desktop.nix         # Desktop environment (KDE Plasma)
     ./modules/users.nix           # User account definitions
+    -/modules/virtualization.nix
   ];
 
   # ===== Boot Configuration =====

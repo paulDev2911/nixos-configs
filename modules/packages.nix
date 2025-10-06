@@ -28,5 +28,8 @@
     
     # Browser
     brave
+
+    # Security
+    osquery
   ];
 }

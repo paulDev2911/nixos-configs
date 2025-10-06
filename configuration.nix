@@ -1,18 +1,14 @@
-# NixOS System Configuration
-# Main configuration file that imports modular components
-# Help: configuration.nix(5) man page or 'nixos-help'
-
 { config, pkgs, ... }:
 
 {
   # Import modular configuration files
   imports = [
     ./hardware-configuration.nix  # Hardware-specific settings (auto-generated)
-    ./modules/packages.nix        # System-wide package installations
     ./modules/services.nix        # System services (SSH, audio, printing)
     ./modules/desktop.nix         # Desktop environment (KDE Plasma)
     ./modules/users.nix           # User account definitions
-    -/modules/virtualization.nix
+    ./modules/virtualization.nix
+    ./modules/security.nix
   ];
 
   # ===== Boot Configuration =====
@@ -66,4 +62,40 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # default packages
+  environment.systemPackages = with pkgs; [
+    # Editor
+    nano
+    
+    # Command-line tools
+    wget
+    git
+    htop
+    curl
+    tree
+    
+    # VPN & Privacy
+    mullvad-vpn
+    mullvad-browser
+    tor-browser
+    
+    # Development
+    vscodium
+    wireshark
+    
+    # Productivity
+    onlyoffice-bin
+    thunderbird
+    keepassxc
+    
+    # Browser
+    brave
+
+  ];
+
+  nix.gc = {
+    automatic = true;
+          dates = "weekly";
+    options = "-d";
+  };
 }

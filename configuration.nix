@@ -19,6 +19,11 @@
   boot.initrd.luks.devices."luks-a15fa5f3-57f6-4597-a9d4-7ccfa2dbb0eb".device = 
     "/dev/disk/by-uuid/a15fa5f3-57f6-4597-a9d4-7ccfa2dbb0eb";
 
+  # ===== Kernel Parameters for Sandbox Fix =====
+  boot.kernel.sysctl = {
+    "kernel.unprivileged_userns_clone" = 1;
+  };
+
   # ===== Networking =====
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -53,6 +58,10 @@
   # ===== System Settings =====
   # Allow installation of proprietary software
   nixpkgs.config.allowUnfree = true;
+
+  # ===== Security Settings =====
+  # Enable Chromium sandbox for Brave and Electron apps
+  security.chromiumSuidSandbox.enable = true;
 
   # ===== State Version =====
   # DO NOT CHANGE this value after installation!
@@ -95,7 +104,7 @@
 
   nix.gc = {
     automatic = true;
-          dates = "weekly";
+    dates = "weekly";
     options = "-d";
   };
 }

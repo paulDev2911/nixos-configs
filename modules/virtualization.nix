@@ -11,14 +11,6 @@
   # dconf für virt-manager GUI-Einstellungen
   programs.dconf.enable = true;
 
-  # uBridge Capabilities für GNS3 Netzwerk-Simulation
-  security.wrappers.ubridge = {
-    source = "${pkgs.ubridge}/bin/ubridge";
-    capabilities = "cap_net_admin,cap_net_raw=ep";
-    owner = "root";
-    group = "root";
-  };
-
   # uBridge ohne Passwort-Abfrage für User
   security.sudo.extraRules = [{
     users = [ "user" ];
@@ -40,13 +32,6 @@
     spice-protocol      # Protocol Headers
     win-virtio          # Windows VirtIO Treiber
     win-spice           # Windows SPICE Tools
-    
-    # GNS3 Netzwerk-Simulation
-    gns3-server         # GNS3 Backend
-    gns3-gui            # GNS3 Frontend
-    dynamips            # Cisco Router Emulator
-    vpcs                # Virtual PC Simulator
-    ubridge             # Network Bridge Tool
     
     # Sonstiges
     tigervnc            # VNC Client/Server

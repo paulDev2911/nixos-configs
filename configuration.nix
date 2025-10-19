@@ -9,6 +9,7 @@
     ./modules/users.nix           # User account definitions
     ./modules/virtualization.nix
     ./modules/security.nix
+    ./modules/ansible-gns3.nix
   ];
 
   # ===== Boot Configuration =====

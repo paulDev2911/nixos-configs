@@ -19,9 +19,7 @@
     # Python für Ansible & GNS3 API
     python312
     python312Packages.pip
-    python312Packages.gns3alchemy  # GNS3 Python Client
     python312Packages.netmiko      # Multi-vendor SSH Library
-    python312Packages.napalm       # Network Automation Library
     python312Packages.jinja2       # Template Engine
     python312Packages.paramiko     # SSH für Ansible
     python312Packages.requests     # HTTP Library für GNS3 API
@@ -32,9 +30,6 @@
     tcpdump           # Packet Analyzer
     iperf3            # Network Performance
     mtr               # Network Diagnostics
-    
-    # TFTP Server für Router Configs
-    tftpd-hpa         # TFTP Server
   ];
 
   # ===== Netzwerk-Konfiguration =====
@@ -50,15 +45,11 @@
       # Ansible & SSH
       22            # SSH für Ansible
       
-      # TFTP für Router Configs
-      69            # TFTP
-      
       # Telnet für alte Router (optional)
       23            # Telnet
     ];
     
     allowedUDPPorts = [
-      69            # TFTP
       5000          # GNS3 Console Range Start
       10000         # GNS3 Console Range End
     ];
@@ -105,18 +96,6 @@
     enable = true;
     package = pkgs.wireshark;
   };
-
-  # ===== TFTP Server Service =====
-  services.atftpd = {
-    enable = true;
-    root = "/srv/tftp";
-  };
-
-  # TFTP Verzeichnis erstellen
-  system.activationScripts.tftpdir = ''
-    mkdir -p /srv/tftp
-    chmod 777 /srv/tftp
-  '';
 
   # ===== Ansible Konfiguration =====
   environment.etc."ansible/ansible.cfg".text = ''
@@ -187,7 +166,13 @@
     };
   };
 
-
+  # ===== GNS3 Verzeichnisse erstellen =====
+  system.activationScripts.gns3dirs = ''
+    mkdir -p /home/user/GNS3/{projects,images,appliances}
+    mkdir -p /home/user/ansible/{playbooks,inventory,roles,templates,group_vars,host_vars}
+    chown -R user:users /home/user/GNS3
+    chown -R user:users /home/user/ansible
+  '';
 
   # ===== Python Virtual Environment für GNS3 API =====
   # Ermöglicht pip install ohne Konflikte
@@ -201,4 +186,21 @@
     export ANSIBLE_CONFIG="/etc/ansible/ansible.cfg"
   '';
 
+  # ===== Nützliche Aliases =====
+  environment.shellAliases = {
+    # GNS3
+    gns3-start = "systemctl start gns3-server";
+    gns3-stop = "systemctl stop gns3-server";
+    gns3-status = "systemctl status gns3-server";
+    gns3-logs = "journalctl -u gns3-server -f";
+    
+    # Ansible
+    ap = "ansible-playbook";
+    av = "ansible-vault";
+    ag = "ansible-galaxy";
+    ai = "ansible-inventory";
+    
+    # Network Testing
+    netscan = "nmap -sn";
+  };
 }

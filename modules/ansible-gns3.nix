@@ -166,41 +166,9 @@
     };
   };
 
-  # ===== GNS3 Verzeichnisse erstellen =====
-  system.activationScripts.gns3dirs = ''
-    mkdir -p /home/user/GNS3/{projects,images,appliances}
-    mkdir -p /home/user/ansible/{playbooks,inventory,roles,templates,group_vars,host_vars}
-    chown -R user:users /home/user/GNS3
-    chown -R user:users /home/user/ansible
-  '';
-
-  # ===== Python Virtual Environment für GNS3 API =====
-  # Ermöglicht pip install ohne Konflikte
+  # ===== Environment Variables =====
   environment.shellInit = ''
-    # GNS3 Python Umgebung
     export GNS3_SERVER_HOST="localhost"
     export GNS3_SERVER_PORT="3080"
-    
-    # Ansible Umgebung
-    export ANSIBLE_HOME="/home/user/ansible"
-    export ANSIBLE_CONFIG="/etc/ansible/ansible.cfg"
   '';
-
-  # ===== Nützliche Aliases =====
-  environment.shellAliases = {
-    # GNS3
-    gns3-start = "systemctl start gns3-server";
-    gns3-stop = "systemctl stop gns3-server";
-    gns3-status = "systemctl status gns3-server";
-    gns3-logs = "journalctl -u gns3-server -f";
-    
-    # Ansible
-    ap = "ansible-playbook";
-    av = "ansible-vault";
-    ag = "ansible-galaxy";
-    ai = "ansible-inventory";
-    
-    # Network Testing
-    netscan = "nmap -sn";
-  };
 }

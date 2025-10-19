@@ -34,12 +34,13 @@ echo ""
 # Kopiere alle Dateien und Verzeichnisse
 echo -e "${YELLOW}➜ Kopiere Dateien...${NC}"
 
-sudo rsync -av --delete \
+sudo rsync -av \
     --exclude='.git' \
     --exclude='.gitignore' \
     --exclude='README.md' \
     --exclude='*.swp' \
     --exclude='*~' \
+    --exclude='hardware-configuration.nix' \
     "$SOURCE_DIR/" "$TARGET_DIR/"
 
 if [ $? -eq 0 ]; then

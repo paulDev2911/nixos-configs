@@ -7,7 +7,7 @@
   security.sudo.execWheelOnly = true;
   
   # Hardened Kernel - Kernel mit zusätzlichen Security-Patches
-  boot.kernelPackages = pkgs.linuxPackages_hardened;
+  boot.kernelPackages = pkgs.linuxPackages;
   
   # Kernel Security Hardening
   boot.kernel.sysctl = {

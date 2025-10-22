@@ -139,7 +139,7 @@
   # Enable Podman as Docker alternative
   virtualisation.podman = {
     enable = true;
-    dockerCompat = true;    # Create 'docker' alias for podman
+    dockerCompat = false;
     defaultNetwork.settings.dns_enabled = true;
   };
 

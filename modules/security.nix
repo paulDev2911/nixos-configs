@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   # ===== Firewall =====
   networking.firewall = {
@@ -177,10 +177,10 @@
       { domain = "*"; type = "soft"; item = "nofile"; value = "4096"; }
       { domain = "*"; type = "hard"; item = "nofile"; value = "8192"; }
       # Set secure umask (new files created with 0027 permissions)
-      { domain = "*"; type = "-"; item = "umask"; value = "0027"; }
+      #{ domain = "*"; type = "-"; item = "umask"; value = "0027"; }
     ];
     
-    services.su.forwardXAuth = false;
+    services.su.forwardXAuth = lib.mkForce false;
   };
 
   # ===== Filesystem Security =====

@@ -206,7 +206,7 @@
     usbguard-notifier  # Desktop Benachrichtigungen für USB
     lynis              # Security auditing tool
     chkrootkit         # Rootkit detection
-    rkhunter           # Rootkit hunter
+    #rkhunter           # Rootkit hunter
     aide               # File integrity checker
   ];
 

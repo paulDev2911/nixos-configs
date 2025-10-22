@@ -85,7 +85,7 @@
     screen                  # Terminal multiplexer alternative
     ripgrep                 # Fast grep alternative
     fd                      # Fast find alternative
-    exa                     # Modern ls replacement
+    eza                     # Modern ls replacement
     bat                     # Cat with syntax highlighting
     fzf                     # Fuzzy finder
     jq                      # JSON processor
@@ -103,10 +103,6 @@
     rustfmt                 # Rust formatter
     clippy                  # Rust linter
 
-    # ===== Go Development =====
-    go                      # Go programming language
-    gopls                   # Go language server
-
     # ===== Other Languages =====
     lua                     # Lua interpreter
     ruby                    # Ruby interpreter
@@ -122,7 +118,7 @@
     p7zip
 
     # ===== Performance Analysis =====
-    perf                    # Linux performance tools
+    linuxPackages.perf                    # Linux performance tools
     flamegraph             # Flame graph visualization
   ];
 

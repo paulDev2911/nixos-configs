@@ -176,15 +176,14 @@
       # Limit number of open files
       { domain = "*"; type = "soft"; item = "nofile"; value = "4096"; }
       { domain = "*"; type = "hard"; item = "nofile"; value = "8192"; }
+      # Set secure umask (new files created with 0027 permissions)
+      { domain = "*"; type = "-"; item = "umask"; value = "0027"; }
     ];
+    
+    services.su.forwardXAuth = false;
   };
 
   # ===== Filesystem Security =====
-  # Set secure umask (new files created with 0027 permissions)
-  security.pam.loginLimits = [
-    { domain = "*"; type = "-"; item = "umask"; value = "0027"; }
-  ];
-
   # Mount /tmp with noexec, nosuid, nodev
   fileSystems."/tmp" = {
     device = "tmpfs";
@@ -214,7 +213,6 @@
   # ===== Additional Security Measures =====
   # Disable coredumps
   systemd.coredump.enable = false;
-  security.pam.services.su.forwardXAuth = false;
 
   # Restrict access to /proc
   boot.specialFileSystems."/proc".options = [ "hidepid=2" ];

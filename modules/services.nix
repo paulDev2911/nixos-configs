@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  # Printing
+  #Printing
   services.printing.enable = true;
 
-  # Audio
+  #Audio
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -14,7 +14,7 @@
     pulse.enable = true;
   };
 
-  # SSH
+  #SSH
   services.openssh = {
     enable = true;
     settings = {

@@ -1,67 +1,67 @@
 { config, pkgs, ... }:
 
 {
-  # ===== GNS3 Umgebung =====
+  #===== GNS3 Umgebung =====
   environment.systemPackages = with pkgs; [
-    # GNS3 Core
+    #GNS3 Core
     gns3-server
     gns3-gui
     
-    # Network Emulation Tools
-    dynamips          # Cisco Router Emulator
-    vpcs              # Virtual PC Simulator
-    ubridge           # Network Bridge Tool
+    #Network Emulation Tools
+    dynamips          #Cisco Router Emulator
+    vpcs              #Virtual PC Simulator
+    ubridge           #Network Bridge Tool
     
-    # Ansible Ecosystem
-    ansible           # Automation Tool
-    ansible-lint      # Best Practices Linter
+    #Ansible Ecosystem
+    ansible           #Automation Tool
+    ansible-lint      #Best Practices Linter
     
-    # Python für Ansible & GNS3 API
+    #Python für Ansible & GNS3 API
     python312
     python312Packages.pip
-    python312Packages.netmiko      # Multi-vendor SSH Library
-    python312Packages.jinja2       # Template Engine
-    python312Packages.paramiko     # SSH für Ansible
-    python312Packages.requests     # HTTP Library für GNS3 API
+    python312Packages.netmiko      #Multi-vendor SSH Library
+    python312Packages.jinja2       #Template Engine
+    python312Packages.paramiko     #SSH für Ansible
+    python312Packages.requests     #HTTP Library für GNS3 API
     
-    # Network Testing & Debugging
-    nmap              # Network Scanner
-    netcat            # TCP/UDP Debugging
-    tcpdump           # Packet Analyzer
-    iperf3            # Network Performance
-    mtr               # Network Diagnostics
+    #Network Testing & Debugging
+    nmap              #Network Scanner
+    netcat            #TCP/UDP Debugging
+    tcpdump           #Packet Analyzer
+    iperf3            #Network Performance
+    mtr               #Network Diagnostics
   ];
 
-  # ===== Netzwerk-Konfiguration =====
+  #===== Netzwerk-Konfiguration =====
   networking.firewall = {
     enable = true;
     
-    # GNS3 Ports
+    #GNS3 Ports
     allowedTCPPorts = [
-      3080          # GNS3 Server HTTP API
-      3081          # GNS3 Server WebSocket (Computing)
-      8000          # Alternative GNS3 Port
+      3080          #GNS3 Server HTTP API
+      3081          #GNS3 Server WebSocket (Computing)
+      8000          #Alternative GNS3 Port
       
-      # Ansible & SSH
-      22            # SSH für Ansible
+      #Ansible & SSH
+      22            #SSH für Ansible
       
-      # Telnet für alte Router (optional)
-      23            # Telnet
+      #Telnet für alte Router (optional)
+      23            #Telnet
     ];
     
     allowedUDPPorts = [
-      5000          # GNS3 Console Range Start
-      10000         # GNS3 Console Range End
+      5000          #GNS3 Console Range Start
+      10000         #GNS3 Console Range End
     ];
     
-    # Erlaube GNS3 Console Port Range
+    #Erlaube GNS3 Console Port Range
     allowedTCPPortRanges = [
-      { from = 5000; to = 10000; }  # GNS3 Console Ports
+      { from = 5000; to = 10000; }  #GNS3 Console Ports
     ];
   };
 
-  # ===== uBridge Capabilities =====
-  # Erlaubt uBridge, Netzwerk-Bridges ohne Root zu erstellen
+  #===== uBridge Capabilities =====
+  #Erlaubt uBridge, Netzwerk-Bridges ohne Root zu erstellen
   security.wrappers.ubridge = {
     source = "${pkgs.ubridge}/bin/ubridge";
     capabilities = "cap_net_admin,cap_net_raw=ep";
@@ -69,7 +69,7 @@
     group = "root";
   };
 
-  # uBridge sudo ohne Passwort
+  #uBridge sudo ohne Passwort
   security.sudo.extraRules = [{
     users = [ "user" ];
     commands = [{
@@ -78,7 +78,7 @@
     }];
   }];
 
-  # ===== QEMU/KVM für GNS3 VMs =====
+  #===== QEMU/KVM für GNS3 VMs =====
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
@@ -88,19 +88,19 @@
     };
   };
 
-  # User zur libvirtd Gruppe
+  #User zur libvirtd Gruppe
   users.users.user.extraGroups = [ "libvirtd" "wireshark" ];
 
-  # ===== Wireshark ohne Root =====
+  #===== Wireshark ohne Root =====
   programs.wireshark = {
     enable = true;
     package = pkgs.wireshark;
   };
 
-  # ===== Ansible Konfiguration =====
+  #===== Ansible Konfiguration =====
   environment.etc."ansible/ansible.cfg".text = ''
     [defaults]
-    # Basis-Einstellungen
+    #Basis-Einstellungen
     inventory = /home/user/ansible/inventory
     roles_path = /home/user/ansible/roles
     host_key_checking = False
@@ -110,22 +110,22 @@
     fact_caching_connection = /tmp/ansible_facts
     fact_caching_timeout = 3600
     
-    # Output
+    #Output
     stdout_callback = yaml
     callback_whitelist = profile_tasks, timer
     
-    # SSH Verbindungen
+    #SSH Verbindungen
     timeout = 30
     connect_timeout = 30
     command_timeout = 30
     
-    # Für Network Devices
+    #Für Network Devices
     [persistent_connection]
     connect_timeout = 60
     command_timeout = 60
   '';
 
-  # ===== GNS3 Server Konfiguration =====
+  #===== GNS3 Server Konfiguration =====
   environment.etc."gns3/gns3_server.conf".text = ''
     [Server]
     host = 0.0.0.0
@@ -151,7 +151,7 @@
     require_kvm = True
   '';
 
-  # ===== Systemd Service für GNS3 Server =====
+  #===== Systemd Service für GNS3 Server =====
   systemd.services.gns3-server = {
     description = "GNS3 Network Simulator Server";
     after = [ "network.target" ];
@@ -166,7 +166,7 @@
     };
   };
 
-  # ===== Environment Variables =====
+  #===== Environment Variables =====
   environment.shellInit = ''
     export GNS3_SERVER_HOST="localhost"
     export GNS3_SERVER_PORT="3080"

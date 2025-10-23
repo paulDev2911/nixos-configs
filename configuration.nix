@@ -97,6 +97,8 @@
     #Browser
     brave
 
+    claude-code
+
   ];
 
   nix.gc = {

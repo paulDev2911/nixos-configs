@@ -142,8 +142,8 @@
   
   #===== Privacy & Networking =====
   #MAC Address Randomization for privacy
-  networking.networkmanager.wifi.macAddress = "random";
-  networking.networkmanager.ethernet.macAddress = "random";
+  #networking.networkmanager.wifi.macAddress = "random";
+  #networking.networkmanager.ethernet.macAddress = "random";
 
   #Use privacy-respecting DNS
   networking.nameservers = [ "9.9.9.9" "149.112.112.112" ];  #Quad9 DNS

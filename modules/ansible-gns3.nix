@@ -7,6 +7,10 @@
     gns3-server
     gns3-gui
     
+    #QEMU/KVM - WICHTIG für VMs
+    qemu
+    qemu_kvm
+    
     #Network Emulation Tools
     dynamips          #Cisco Router Emulator
     vpcs              #Virtual PC Simulator
@@ -164,6 +168,9 @@
       Restart = "on-failure";
       RestartSec = "5s";
     };
+    
+    #WICHTIG: QEMU-Pfade im Service verfügbar machen
+    path = with pkgs; [ qemu qemu_kvm ubridge ];
   };
 
   #===== Environment Variables =====

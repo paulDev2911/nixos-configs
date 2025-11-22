@@ -17,8 +17,8 @@
     ubridge           #Network Bridge Tool
     
     #Ansible Ecosystem
-    ansible           #Automation Tool
-    ansible-lint      #Best Practices Linter
+    #ansible           #Automation Tool
+    #ansible-lint      #Best Practices Linter
     
     #Python für Ansible & GNS3 API
     python312

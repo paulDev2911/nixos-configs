@@ -8,6 +8,19 @@
     options kvm ignore_msrs=1
   '';
 
+  #Kernel modules für libvirt/iptables (hardened kernel compatibility)
+  boot.kernelModules = [ 
+    "kvm-intel"
+    "ip_tables"
+    "iptable_filter"
+    "iptable_nat"
+    "xt_REJECT"
+    "nf_nat"
+    "nf_conntrack"
+    "nf_reject_ipv4"
+    "nf_reject_ipv6"
+  ];
+
   #dconf für virt-manager GUI-Einstellungen
   programs.dconf.enable = true;
 
@@ -55,6 +68,9 @@
     #Docker Container Runtime
     docker.enable = true;
   };
+
+  #WICHTIG: Für libvirt networking
+  networking.firewall.checkReversePath = false;
 
   #SPICE Agent für bessere VM-Integration (Clipboard, Display)
   services.spice-vdagentd.enable = true;

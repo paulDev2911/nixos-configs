@@ -11,6 +11,7 @@
     ./modules/security.nix
     ./modules/dev.nix             #Development tools and environments
     ./modules/ansible-gns3.nix
+    ./modules/salt.nix
   ];
 
   #===== Boot Configuration =====

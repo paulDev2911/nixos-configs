@@ -6,17 +6,8 @@
   #Salt Minion for local management
 
   environment.systemPackages = with pkgs; [
-    #Salt Stack
-    salt                    #Salt Master & Minion
-    
-    #Salt Utilities
-    python312Packages.salt  #Python Salt modules
-    python312Packages.jinja2 #Template engine for Salt states
-    python312Packages.pyyaml #YAML parsing
-    python312Packages.msgpack #MessagePack serialization
-    python312Packages.pyzmq  #ZeroMQ bindings
-    python312Packages.tornado #Async networking library
-    python312Packages.requests #HTTP library
+    #Salt Stack (enthält bereits alle Python-Dependencies)
+    salt
   ];
 
   #===== Salt Master Service =====
@@ -29,7 +20,7 @@
       ret_port: 4506
       
       #===== Security =====
-      auto_accept: False          #Manually accept minion keys for security
+      auto_accept: False
       
       #===== File Locations =====
       file_roots:
@@ -95,8 +86,8 @@
   #===== Firewall Configuration =====
   networking.firewall = {
     allowedTCPPorts = [
-      4505  #Salt Publisher Port (Master → Minions)
-      4506  #Salt Request Server Port (Minions → Master)
+      4505  #Salt Publisher Port
+      4506  #Salt Request Server Port
     ];
   };
 

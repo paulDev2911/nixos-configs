@@ -1,10 +1,19 @@
 { config, pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [ salt ];
+  environment.systemPackages = with pkgs; [ 
+    salt_3006  # Verwende stabile Version statt neueste
+  ];
 
-  services.salt.master.enable = true;
-  services.salt.minion.enable = true;
+  services.salt.master = {
+    enable = true;
+    package = pkgs.salt_3006;
+  };
+  
+  services.salt.minion = {
+    enable = true;
+    package = pkgs.salt_3006;
+  };
 
   networking.firewall.allowedTCPPorts = [ 4505 4506 ];
 

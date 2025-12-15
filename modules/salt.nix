@@ -4,8 +4,8 @@
   environment.systemPackages = with pkgs; [ salt ];
 
   # Temporär deaktiviert wegen Crypto-Bug
-  services.salt.master.enable = false;
-  services.salt.minion.enable = false;
+  services.salt.master.enable = true;
+  services.salt.minion.enable = true;
 
   networking.firewall.allowedTCPPorts = [ 4505 4506 ];
 
